@@ -1,0 +1,23 @@
+[project]
+name = "yquantum2026"
+version = "0.1.0"
+description = "YQuantum 2026 Hackathon - The Logical Qubit"
+requires-python = ">=3.10"
+dependencies = [
+    "bluequbit",
+    "qiskit",
+    "qiskit-aer",
+    "matplotlib",
+    "notebook",
+    "ipykernel",
+    "numpy",
+    "pylatexenc",
+    "pytket",
+    "pytket-qiskit",
+    "pyzx",
+    "quimb",
+    "cupy-cuda12x; platform_system != 'Darwin'",
+]
+
+[tool.setuptools]
+packages = []

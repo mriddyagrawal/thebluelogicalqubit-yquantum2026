@@ -1,0 +1,70 @@
+import time
+import warnings
+import sys
+import os
+from qiskit import QuantumCircuit
+import numpy as np
+from qiskit import QuantumCircuit, transpile
+import requests
+import bluequbit
+from pathlib import Path
+sys.path.append(os.path.abspath("../.."))
+from modules import *
+
+# os.environ["BLUEQUBIT_PPS_DO_NO_USE_PARALLEL_COMPUTE"] = "1"
+os.environ["BLUEQUBIT_DEQART_INTERNAL_DISABLE_STRICT_VALIDATIONS"] = "1"
+
+
+def load_simple_env(env_path: Path) -> None:
+    if not env_path.exists():
+        return
+    for raw_line in env_path.read_text().splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
+# Notebook is under tutorial/, so check both cwd and its parent for .env
+load_simple_env(Path.cwd() / ".env")
+load_simple_env(Path.cwd().parent / ".env")
+load_simple_env(Path.cwd().parent.parent / ".env")
+
+api_token = os.getenv("bluequbitapi") or os.getenv("BLUEQUBIT_API_TOKEN")
+if not api_token:
+    raise ValueError("Missing BlueQubit API token. Set bluequbitapi in .env")
+
+# BlueQubit SDK reads BLUEQUBIT_API_TOKEN by default.
+os.environ["BLUEQUBIT_API_TOKEN"] = api_token
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+bq = bluequbit.init(api_token=api_token)
+
+qc = load_qasm('../P4_gentle_mound.qasm')
+
+print(f"Gates: {qc.count_ops()}")
+qc.draw("mpl", fold=-1)
+
+results = bq.run(
+    qc,
+    device="mps.cpu",
+    shots=5000,
+    options={"mps_bond_dimension": 32},
+)
+
+counts = results.get_counts()
+
+# top10_probs = dict(sorted(probs.items(), key=lambda x: x[1], reverse=True)[:10]) # get top 10
+# print(top10_probs) 
+
+top10_counts = sorted(counts.items(), key=lambda x: x[1], reverse=True)[:10]
+
+# The bitstring with the highest count is our candidate peak bitstring
+peak_bitstring_mps = top10_counts[0][0]
+
+print("Top 10 most frequent bitstrings from MPS Simulation: \n")
+for bitstring, count in top10_counts:
+    print(f"  {bitstring}: {count}")
+print(f"\nPeak bitstring inferred from MPS samples: {peak_bitstring_mps}")
