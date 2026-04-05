@@ -1,0 +1,52 @@
+<div class="slide" id="slide-4">
+  <h2>P5: Soft Rise &mdash; <span id="p5-qubits"></span> Qubits</h2>
+  <div class="two-col">
+    <div class="col">
+      <div class="stats-row" style="gap: 12px;">
+        <div class="stat-card hover-grow">
+          <div class="stat" id="p5-orig-gates"></div>
+          <div class="stat-label">Original Gates</div>
+          <div style="font-size:0.75em; color:#9e9e9e; margin-top:4px;">
+            <span id="p5-orig-u3"></span> U3 + <span id="p5-orig-cz"></span> CZ
+          </div>
+        </div>
+        <div class="stat-card hover-grow" style="border: 2px solid #43a047;">
+          <div class="stat" style="color:#43a047;" id="p5-final-gates"></div>
+          <div class="stat-label">After Optimization</div>
+          <div style="font-size:0.75em; color:#9e9e9e; margin-top:4px;">
+            depth <span id="p5-orig-depth"></span> &rarr; <span id="p5-final-depth"></span>
+          </div>
+        </div>
+      </div>
+
+      <h3>Pipeline</h3>
+      <div style="margin: 8px 0;">
+        <span class="pipeline-step hover-grow">QASM</span>
+        <span class="pipeline-arrow">&rarr;</span>
+        <span class="pipeline-step hover-grow">Qiskit opt=3</span>
+        <span class="pipeline-arrow">&rarr;</span>
+        <span class="pipeline-step hover-grow">Tket Peephole</span>
+        <span class="pipeline-arrow">&rarr;</span>
+        <span class="pipeline-step hover-grow" style="background:#e8f5e9; border-color:#43a047; color:#2e7d32;">
+          <span id="p5-method"></span>
+        </span>
+      </div>
+      <div class="method-box" style="font-size:0.9em;">
+        <span id="p5-shots"></span> shots, bond dimension <span id="p5-bond"></span>
+      </div>
+
+      <div id="p5-gate-breakdown" style="margin-top:10px;"></div>
+
+      <div class="result-box">
+        <strong>Peak Bitstring:</strong><br>
+        <span class="bitstring" id="p5-bitstring"></span>
+      </div>
+    </div>
+    <div class="col">
+      <p style="font-size:0.85em; color:#78909c; margin-bottom:5px;">Optimized circuit &mdash; scroll to explore, click to zoom</p>
+      <div id="p5-circuit-viewer" class="circuit-viewer">
+        <img src="img/P5_optimized_circuit.png" class="zoomable circuit-scroll" />
+      </div>
+    </div>
+  </div>
+</div>

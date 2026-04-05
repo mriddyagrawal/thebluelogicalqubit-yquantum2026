@@ -1,0 +1,84 @@
+<div class="slide" id="slide-8">
+  <h2>P10: Eternal Mountain (56 qubits)</h2>
+  <p style="margin-bottom:10px; font-size:0.95em;">
+    <strong>Probability-aware gate removal</strong> &mdash; R<sub>z</sub> commutation + R<sub>y</sub> cancellation simplifies the graph to expose the peak.
+  </p>
+
+  <div class="two-col" style="align-items:center; gap:24px;">
+    <!-- Animation area -->
+    <div class="col" style="flex:1.5; position:relative;">
+      <div id="p10-anim-container" style="position:relative; width:100%; height:400px; background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); overflow:hidden;">
+        <canvas id="p10-canvas" width="560" height="400" style="display:block; width:100%; height:100%;"></canvas>
+        <div id="p10-stage-label" style="position:absolute; top:12px; left:50%; transform:translateX(-50%); background:rgba(26,35,126,0.9); color:#fff; padding:6px 18px; border-radius:20px; font-size:0.85em; font-weight:600; transition: opacity 0.4s;">
+          Original Circuit &mdash; 56 qubits, 3836 gates
+        </div>
+        <!-- Replay button -->
+        <div id="p10-replay" style="position:absolute; bottom:10px; right:14px; background:#1e88e5; color:#fff; padding:5px 14px; border-radius:6px; font-size:0.78em; cursor:pointer; opacity:0.7; transition:opacity 0.2s;" onclick="restartP10Anim()">
+          Replay
+        </div>
+      </div>
+    </div>
+
+    <!-- Steps explanation -->
+    <div class="col" style="flex:1;">
+      <div id="p10-step-1" class="p10-step-card" style="opacity:0.35; transition:all 0.5s;">
+        <div class="p10-step-num" style="background:#e53935;">1</div>
+        <div>
+          <strong>Remove all R<sub>z</sub> gates</strong>
+          <p style="font-size:0.82em; margin:2px 0 0;">Phase doesn't affect |amplitude|&sup2; &mdash; exact, zero error</p>
+        </div>
+      </div>
+      <div id="p10-step-2" class="p10-step-card" style="opacity:0.35; transition:all 0.5s;">
+        <div class="p10-step-num" style="background:#fb8c00;">2</div>
+        <div>
+          <strong>Remove small R<sub>y</sub>(&theta;) gates</strong>
+          <p style="font-size:0.82em; margin:2px 0 0;">|&theta;| &lt; 0.5 &rarr; nearly identity, ~30% of U gates removed</p>
+        </div>
+      </div>
+      <div id="p10-step-3" class="p10-step-card" style="opacity:0.35; transition:all 0.5s;">
+        <div class="p10-step-num" style="background:#7b1fa2;">3</div>
+        <div>
+          <strong>CZ&sup2; = I cancellation</strong>
+          <p style="font-size:0.82em; margin:2px 0 0;">Adjacent CZ pairs cancel &mdash; edges vanish from graph</p>
+        </div>
+      </div>
+      <div id="p10-step-4" class="p10-step-card" style="opacity:0.35; transition:all 0.5s;">
+        <div class="p10-step-num" style="background:#2e7d32;">4</div>
+        <div>
+          <strong>Simplified graph &rarr; MPS simulation</strong>
+          <p style="font-size:0.82em; margin:2px 0 0;">Reduced connectivity &rarr; low bond dimension suffices</p>
+        </div>
+      </div>
+
+      <div id="p10-result-box" class="result-box" style="margin-top:14px; opacity:0; transition: opacity 0.6s;">
+        <strong>Gate reduction:</strong> 3836 &rarr; ~628 gates<br>
+        <strong>Strategy:</strong> Probability-aware &mdash; we only need the peak, not the full state
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .p10-step-card {
+      display: flex; align-items: center; gap: 12px;
+      background: #fff; border-radius: 10px; padding: 10px 14px; margin: 7px 0;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      border-left: 3px solid #e0e0e0;
+    }
+    .p10-step-card.active {
+      opacity: 1 !important;
+      border-left-color: #1e88e5;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.12);
+    }
+    .p10-step-card.done {
+      opacity: 0.85 !important;
+      border-left-color: #43a047;
+    }
+    .p10-step-num {
+      min-width: 28px; height: 28px; border-radius: 50%;
+      color: #fff; font-weight: 700; font-size: 0.85em;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .p10-step-card p { color: #546e7a; }
+  </style>
+
+</div>

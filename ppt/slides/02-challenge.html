@@ -1,0 +1,42 @@
+<div class="slide" id="slide-2">
+  <h2>The Challenge</h2>
+  <p style="margin-bottom: 12px;">
+    Given a quantum circuit as a QASM file, find the <strong>peak bitstring</strong> &mdash;
+    the most probable measurement outcome.
+  </p>
+  <div class="two-col" style="align-items: center;">
+    <div class="col">
+      <div class="method-box">
+        <strong>Why is this hard?</strong><br>
+        A 50-qubit statevector needs 2<sup>50</sup> &approx; <strong>1.1 quadrillion</strong> complex amplitudes.
+        Direct simulation is impossible beyond ~30 qubits.
+      </div>
+      <h3 style="margin-top: 12px;">Scaling (P1 &ndash; P9)</h3>
+      <div id="qubit-bars" class="interactive" style="margin-top:8px;"></div>
+    </div>
+    <div class="col">
+      <h3>Our Approach</h3>
+      <div class="pipeline-vertical">
+        <div class="pipeline-step hover-grow" style="display:block; margin:8px 0; text-align:center;">
+          1. Load QASM circuit
+        </div>
+        <div class="pipeline-arrow" style="text-align:center;">&darr;</div>
+        <div class="pipeline-step hover-grow" style="display:block; margin:8px 0; text-align:center;">
+          2. Optimize (Qiskit + Tket + PyZX)
+        </div>
+        <div class="pipeline-arrow" style="text-align:center;">&darr;</div>
+        <div class="pipeline-step hover-grow" style="display:block; margin:8px 0; text-align:center;">
+          3. Analyze structure (factoring, cancellations)
+        </div>
+        <div class="pipeline-arrow" style="text-align:center;">&darr;</div>
+        <div class="pipeline-step hover-grow" style="display:block; margin:8px 0; text-align:center;">
+          4. Simulate (MPS / Exact Statevector)
+        </div>
+        <div class="pipeline-arrow" style="text-align:center;">&darr;</div>
+        <div class="pipeline-step hover-grow" style="display:block; margin:8px 0; text-align:center; background:#e8f5e9; border-color:#43a047; color:#2e7d32;">
+          5. Extract peak bitstring
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

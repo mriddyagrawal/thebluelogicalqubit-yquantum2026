@@ -1,0 +1,58 @@
+<div class="slide" id="slide-7">
+  <h2>Methods & Toolbox</h2>
+  <div class="two-col">
+    <div class="col">
+      <h3>Circuit Optimization</h3>
+      <div class="method-card hover-grow">
+        <strong>Qiskit Transpiler</strong>
+        <p>Optimization level 3, basis gate targeting, multi-seed sweep</p>
+      </div>
+      <div class="method-card hover-grow">
+        <strong>Tket FullPeepholeOptimise</strong>
+        <p>Peephole gate merging & cancellation across the full circuit</p>
+      </div>
+      <div class="method-card hover-grow">
+        <strong>Gate Cancellation</strong>
+        <p>CZ&sup2; = I identity, InverseCancellation, CommutativeCancellation</p>
+      </div>
+
+      <h3 style="margin-top: 15px;">Simulation</h3>
+      <div class="method-card hover-grow">
+        <strong>Exact Statevector</strong>
+        <p>Up to ~25 qubits via Aer &mdash; used after graph decomposition</p>
+      </div>
+      <div class="method-card hover-grow">
+        <strong>Matrix Product State (MPS)</strong>
+        <p>BlueQubit + quimb tensor networks, bond dim 32&ndash;128</p>
+      </div>
+    </div>
+    <div class="col">
+      <h3>Structural Analysis</h3>
+      <div class="method-card hover-grow">
+        <strong>Graph Decomposition</strong>
+        <p>NetworkX connected components on CZ graph &rarr; independent subcircuits</p>
+      </div>
+      <div class="method-card hover-grow">
+        <strong>Near-Identity Removal</strong>
+        <p>Strip U gates with rotation &lt; 0.05 rad (effectively identity)</p>
+      </div>
+
+      <h3 style="margin-top: 15px;">Libraries</h3>
+      <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px;">
+        <span class="pipeline-step hover-grow">Qiskit</span>
+        <span class="pipeline-step hover-grow">PyTket</span>
+        <span class="pipeline-step hover-grow">BlueQubit</span>
+        <span class="pipeline-step hover-grow">quimb</span>
+        <span class="pipeline-step hover-grow">NetworkX</span>
+        <span class="pipeline-step hover-grow">PyZX</span>
+        <span class="pipeline-step hover-grow">NumPy</span>
+      </div>
+
+      <div class="result-box" style="margin-top: 20px;">
+        <strong>Key Takeaway:</strong> No single tool solves everything &mdash;
+        the winning strategy is combining multiple optimization passes,
+        structural analysis, and the right simulation backend for each problem's scale.
+      </div>
+    </div>
+  </div>
+</div>

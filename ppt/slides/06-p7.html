@@ -1,0 +1,58 @@
+<div class="slide" id="slide-6">
+  <h2>P7: Rolling Ridge &mdash; <span id="p7-qubits"></span> Qubits</h2>
+
+  <div class="two-col" style="gap:30px;">
+    <!-- Left: insight + stats -->
+    <div class="col">
+      <div class="insight-box">
+        <strong>Key Insight:</strong> The CZ connectivity graph splits into
+        <strong><span id="p7-components"></span> independent subcircuits</strong>
+        (<span id="p7-comp0-q"></span>q + <span id="p7-comp1-q"></span>q) &mdash;
+        each small enough for <strong>exact statevector simulation</strong>.
+      </div>
+
+      <div style="margin:10px 0;">
+        <span class="pipeline-step hover-grow">Build CZ Graph</span>
+        <span class="pipeline-arrow">&rarr;</span>
+        <span class="pipeline-step hover-grow">Find Components</span>
+        <span class="pipeline-arrow">&rarr;</span>
+        <span class="pipeline-step hover-grow">Simulate Exactly</span>
+        <span class="pipeline-arrow">&rarr;</span>
+        <span class="pipeline-step hover-grow" style="background:#e8f5e9; border-color:#43a047; color:#2e7d32;">Combine</span>
+      </div>
+
+      <div class="stats-row" style="gap:10px; margin-top:10px;">
+        <div class="stat-card hover-grow">
+          <div class="stat" id="p7-orig-gates"></div>
+          <div class="stat-label">Total Gates</div>
+        </div>
+        <div class="stat-card hover-grow" style="border-left:4px solid #4FC3F7;">
+          <div class="stat" style="color:#0288d1;">50.0%</div>
+          <div class="stat-label">Comp 0 Peak Prob</div>
+        </div>
+        <div class="stat-card hover-grow" style="border-left:4px solid #FF8A65;">
+          <div class="stat" style="color:#e64a19;">49.9%</div>
+          <div class="stat-label">Comp 1 Peak Prob</div>
+        </div>
+      </div>
+
+      <div class="method-box" style="font-size:0.9em; margin-top:10px;">
+        <strong>Simulation:</strong> <span id="p7-method"></span> &mdash;
+        <span id="p7-shots"></span> shots per component
+      </div>
+
+      <div class="result-box" style="margin-top:10px;">
+        <strong>Peak Bitstring:</strong><br>
+        <span class="bitstring" id="p7-bitstring"></span>
+      </div>
+    </div>
+
+    <!-- Right: interactive graph -->
+    <div class="col">
+      <p style="font-size:0.82em; color:#78909c; margin-bottom:6px;">
+        Hover nodes for qubit info &mdash; click to highlight component
+      </p>
+      <div id="p7-graph-wrapper" class="interactive" style="position:relative; z-index:10; background:#fff; border-radius:10px; padding:10px; box-shadow:0 2px 10px rgba(0,0,0,0.08);"></div>
+    </div>
+  </div>
+</div>

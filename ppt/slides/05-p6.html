@@ -1,0 +1,49 @@
+<div class="slide" id="slide-5">
+  <h2>P6: Low Hill &mdash; <span id="p6-qubits"></span> Qubits</h2>
+  <div class="two-col">
+    <div class="col">
+      <div class="insight-box">
+        <strong>Key Insight:</strong> CZ gates cancel in pairs (CZ&sup2; = I).<br>
+        <span id="p6-orig-cz"></span> CZ gates &rarr; only <strong><span id="p6-final-cz"></span></strong> survived.
+        <span id="p6-final-u"></span> U gates remain.
+      </div>
+
+      <div class="stats-row" style="gap: 12px;">
+        <div class="stat-card hover-grow">
+          <div class="stat" id="p6-orig-gates"></div>
+          <div class="stat-label">Original Gates</div>
+          <div style="font-size:0.75em; color:#9e9e9e;">depth <span id="p6-orig-depth"></span></div>
+        </div>
+        <div class="stat-card hover-grow" style="border: 2px solid #43a047;">
+          <div class="stat" style="color:#43a047;" id="p6-final-gates"></div>
+          <div class="stat-label">After Optimization</div>
+          <div style="font-size:0.75em; color:#9e9e9e;">depth <span id="p6-final-depth"></span></div>
+        </div>
+        <div class="stat-card hover-grow" style="border: 2px solid #e53935;">
+          <div class="stat" style="color:#e53935;" id="p6-reduction"></div>
+          <div class="stat-label">Reduction</div>
+        </div>
+      </div>
+
+      <h3>Pipeline</h3>
+      <div style="margin: 6px 0;">
+        <span class="pipeline-step hover-grow">InverseCancellation</span>
+        <span class="pipeline-arrow">&rarr;</span>
+        <span class="pipeline-step hover-grow">CommutativeCancellation</span><br>
+        <span class="pipeline-arrow">&rarr;</span>
+        <span class="pipeline-step hover-grow">Optimize1qGates</span>
+        <span class="pipeline-arrow">&rarr;</span>
+        <span class="pipeline-step hover-grow">Tket</span>
+      </div>
+
+      <div class="result-box">
+        <strong>Peak (99.04% probability, 4,952 / 5,000 shots):</strong><br>
+        <span class="bitstring" id="p6-bitstring"></span>
+      </div>
+    </div>
+    <div class="col">
+      <div id="p6-gate-animator"></div>
+      <div id="p6-donut-chart" style="margin-top: 15px;"></div>
+    </div>
+  </div>
+</div>

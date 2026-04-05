@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Logical Qubit - YQuantum 2026</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+</head>
+<body>
+
+<div id="slides"></div>
+
+<div class="slide-num" id="slide-counter">1 / 8</div>
+<div class="nav-hint">Arrow keys or click to navigate</div>
+
+<script>let DATA = null;</script>
+<script src="js/background.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/interactive.js"></script>
+
+<script>
+  const slideFiles = [
+    'slides/01-title.html',
+    'slides/02-challenge.html',
+    'slides/03-overview.html',
+    'slides/04-p5.html',
+    'slides/05-p6.html',
+    'slides/06-p7.html',
+    'slides/07-methods.html',
+    'slides/08-p10.html'
+  ];
+
+  async function loadSlides() {
+    const container = document.getElementById('slides');
+    for (const file of slideFiles) {
+      const resp = await fetch(file);
+      const html = await resp.text();
+      container.insertAdjacentHTML('beforeend', html);
+    }
+    initNavigation();
+
+    // Load real data and populate interactive elements
+    await loadData();
+
+    // Counter animation
+    document.querySelectorAll('.counter').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      let current = 0;
+      const step = Math.max(1, Math.floor(target / 30));
+      const interval = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = current;
+        if (current >= target) {
+          clearInterval(interval);
+          el.classList.add('counter-done');
+        }
+      }, 40);
+    });
+
+    // Qubit bar chart
+    setTimeout(buildQubitBars, 200);
+
+    // P10 animation
+    setTimeout(initP10Animation, 300);
+
+    // Zoomable images
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('zoomable')) {
+        e.stopPropagation();
+        const overlay = document.createElement('div');
+        overlay.className = 'zoom-overlay';
+        overlay.innerHTML = '<img src="' + e.target.src + '">';
+        overlay.addEventListener('click', () => overlay.remove());
+        document.addEventListener('keydown', function handler(ev) {
+          if (ev.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', handler); }
+        });
+        document.body.appendChild(overlay);
+      }
+    });
+  }
+
+  function buildQubitBars() {
+    const el = document.getElementById('qubit-bars');
+    if (!el) return;
+    const problems = [
+      { name: 'P1', qubits: 4,  color: '#90CAF9' },
+      { name: 'P2', qubits: 12, color: '#90CAF9' },
+      { name: 'P3', qubits: 30, color: '#90CAF9' },
+      { name: 'P4', qubits: 40, color: '#90CAF9' },
+      { name: 'P5', qubits: 50, color: '#4FC3F7' },
+      { name: 'P6', qubits: 60, color: '#FF8A65' },
+      { name: 'P7', qubits: 42, color: '#AB47BC' },
+      { name: 'P8', qubits: 58, color: '#26A69A' },
+      { name: 'P9', qubits: 69, color: '#EF5350' },
+    ];
+    const maxQ = 69;
+    let html = '';
+    for (const p of problems) {
+      const pct = (p.qubits / maxQ * 100);
+      html += `<div class="qbar-row">
+        <div class="qbar-label">${p.name}</div>
+        <div class="qbar-track">
+          <div class="qbar-fill" style="background:${p.color};" data-width="${pct}%"></div>
+        </div>
+        <div class="qbar-val">${p.qubits}q</div>
+      </div>`;
+    }
+    el.innerHTML = html;
+    setTimeout(() => {
+      el.querySelectorAll('.qbar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
+    }, 100);
+  }
+
+  loadSlides();
+</script>
+
+</body>
+</html>
