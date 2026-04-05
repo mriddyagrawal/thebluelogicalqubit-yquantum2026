@@ -1,35 +1,3 @@
-# YQuantum 2026 - BlueQubit Challenge Solutions (The Logical Qubit)
-This document summarizes the solutions for the BlueQubit Challenge, as part of YQuantum 2026
-
-## Solutions
-| Problem | Qubits | Bitstring | Method |
-| :--- | :--- | :--- | :--- |
-| **P1** | 4 | `1001` | Exact Statevector |
-| **P2** | 20 | `` | Exact Statevector |
-| **P3** | 30 | `` | Matrix Approximation |
-| **P4** | 40 | `` | Matrix Product State (MPS) |
-| **P5** | 50 | `00011011001101000001010110110100101010011000011001` | Qiskit + Tket Transpiler |
-| **P6** | 60 | `101100101001010001110111100101100011101011100000000000110111` | [Approximate Transpilation (0.99)] |
-| **P7** | 46 | `` | [Factored (20q + 26q)] |
-| **P8** | 72 | `` | [Factored (22q + 24q + 26q)] |
-| **P9** | 90 | `010001110101001111111110011111111111000010000000111101010111011100011` | [] |
-
-## Solutions
-| **Solutions Pending** |
-| :--- |
-| **P10**|
-
-## Methods used
-1. Approximation
-2. Recognizing patterns
-3. Matrix approximation
-4. MPS
-5. Using Qiskit + Tket optimization
-6. Removing rotations
-7. Visually analyzing the circuits, splitting qubits into 2 groups before optimizing
-8. Combination of 2 or more of the methods above
-
----
 # YQuantum 2026 - BlueQubit Challenge
 This document summarizes the challenges and our approach to each problem of the BlueQubit Challenge, as part of YQuantum 2026
 
