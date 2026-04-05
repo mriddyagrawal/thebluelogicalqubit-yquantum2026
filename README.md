@@ -32,7 +32,7 @@ Solved ✅
 
 "Similar to the previous challenge, brute-force classical simulation is still viable. Focus on extracting the highest-probability outcome from the final state rather than optimizing compilation."
 
-Our approach:   
+Our approach: We used matrix approximation to solve this problem.
 Final bitstring:
 
 ### Problem 4: Gentle Mound 🌿
@@ -42,7 +42,7 @@ Solved ✅
 
 "The circuit size starts pushing statevector limits, but its depth and entanglement remain manageable. Approximate simulators like MPS can be very handy!"
 
-Our approach:   
+Our approach: We used Matrix Product State (MPS) to solve this problem.
 Final bitstring:
 
 ### Problem 5: Soft Rise 🌄
