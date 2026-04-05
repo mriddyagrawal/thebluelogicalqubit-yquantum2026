@@ -2,6 +2,17 @@
 This document summarizes the challenges and our approach to each problem of the BlueQubit Challenge, as part of YQuantum 2026
 
 ## Problems and solutions
+| Problem | Qubits | Bitstring | Method |
+| :--- | :--- | :--- | :--- |
+| **P1** | 4 | `1001` | Visual |
+| **P2** | 20 | `111010100110` | CPU Exact Statevector Simulation |
+| **P3** | 30 | `000110111010100110100001111100` | CPU Exact Statevector Simulation |
+| **P4** | 40 | `0000111011000010110110011000010111001000` | BlueQubit MPS sampling |
+| **P5** | 50 | `00011011001101000001010110110100101010011000011001` | Qiskit + Tket + MPS |
+| **P6** | 60 | `101100101001010001110111100101100011101011100000000000110111` | Approx transpile + cancellations + MPS |
+| **P7** | 46 | `101101010100001000100011001011101011000100` | Graph decomposition + exact statevector |
+| **P8** | 72 | `0111001100010011111101000101001010100010110010000010000000` | PyZX clifford_simp + Qiskit transpile |
+| **P9** | 90 | `010001110101001111111110011111111111000010000000111101010111011100011` | PyZX + Qiskit + Aer MPS |
 
 ### Problem 1: Little Dimple 🫧
 **qubits: 4**  
@@ -42,7 +53,7 @@ Solved ✅
 
 "The circuit size starts pushing statevector limits, but its depth and entanglement remain manageable. Approximate simulators like MPS can be very handy!"
 
-Our approach: We used Matrix Product State (MPS) to solve this problem.
+Our approach: BlueQubit MPS sampling with bond-dimension tuning.
 Final bitstring:
 
 ### Problem 5: Soft Rise 🌄
@@ -52,7 +63,7 @@ Solved ✅
 
 "If your simulator returns a near-uniform  flat distribution, the circuit is likely highly entangling or scrambling. Increase bond dimension, sample multiple runs and use the fact that the high signal of the peak bitstring can be “hidden” in the flat distribution."
 
-Our approach:   
+Our approach: Qiskit optimization then Tket peephole, followed by MPS sampling.  
 Final bitstring: `00011011001101000001010110110100101010011000011001`
 
 ### Problem 6: Low Hill ⛰️
@@ -62,7 +73,7 @@ Solved ✅
 
 "Direct simulation becomes impractical here. Instead, search for canceling gates and simplifying the circuit before simulating it. Qiskit has good tools for approximate transpilation and simplification of circuits."
 
-Our approach:   
+Our approach: Approximate transpilation plus gate-cancellation passes, then MPS sampling.  
 Final bitstring: `101100101001010001110111100101100011101011100000000000110111`
 
 ### Problem 7: Rolling Ridge 🏞️
@@ -72,7 +83,7 @@ Solved ✅
 
 "Exact or approximate simulations might not work here. Instead try to analyze the circuit and spot any simplifications you can make!"
 
-Our approach:   
+Our approach: Decomposed the CZ graph into components and solved each exactly.  
 Final bitstring:
 
 ### Problem 8: Bold Peak 🏜
@@ -82,7 +93,7 @@ Solved ✅
 
 "This challenge blends multiple patterns from earlier problems. Combine visual inspection, partial simulation, decomposition, and compilation tricks to expose the hidden bias toward the peak bitstring."
 
-Our approach:   
+Our approach: PyZX clifford simplification followed by Qiskit level-3 transpilation.  
 Final bitstring:
 
 ### Problem 9: Grand Summit 🏔️
@@ -92,7 +103,7 @@ Solved ✅
 
 "This challenge is similar to the previous one, but is much bigger."
 
-Our approach:   
+Our approach: PyZX simplification + Qiskit transpilation, then Aer MPS bond sweeps.  
 Final bitstring: `010001110101001111111110011111111111000010000000111101010111011100011`
 
 ### Problem 10: Eternal Mountain 🗻
