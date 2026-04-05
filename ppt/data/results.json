@@ -1948,7 +1948,7 @@
       "gates": 201,
       "depth": 18,
       "method": "Exact Statevector",
-      "bitstring": ""
+      "bitstring": "111010100110"
     },
     {
       "id": "P3",
@@ -1957,7 +1957,7 @@
       "gates": 2048,
       "depth": 93,
       "method": "Exact Statevector",
-      "bitstring": ""
+      "bitstring": "000110111010100110100001111100"
     },
     {
       "id": "P4",
@@ -1966,7 +1966,7 @@
       "gates": 699,
       "depth": 25,
       "method": "MPS Simulation",
-      "bitstring": ""
+      "bitstring": "0000111011000010110110011000010111001000"
     },
     {
       "id": "P5",
