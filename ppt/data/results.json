@@ -1938,7 +1938,7 @@
       "qubits": 4,
       "gates": 2,
       "depth": 1,
-      "method": "Exact Statevector",
+      "method": "Visual Analysis",
       "bitstring": "1001"
     },
     {
@@ -1948,7 +1948,7 @@
       "gates": 201,
       "depth": 18,
       "method": "Exact Statevector",
-      "bitstring": "111010100110"
+      "bitstring": ""
     },
     {
       "id": "P3",
@@ -1956,8 +1956,8 @@
       "qubits": 30,
       "gates": 2048,
       "depth": 93,
-      "method": "Matrix Approximation",
-      "bitstring": "000110111010100110100001111100"
+      "method": "Exact Statevector",
+      "bitstring": ""
     },
     {
       "id": "P4",
@@ -1966,7 +1966,7 @@
       "gates": 699,
       "depth": 25,
       "method": "MPS Simulation",
-      "bitstring": "0000111011000010110110011000010111001000"
+      "bitstring": ""
     },
     {
       "id": "P5",
