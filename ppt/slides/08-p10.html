@@ -1,84 +1,67 @@
 <div class="slide" id="slide-8">
-  <h2>P10: Eternal Mountain (56 qubits)</h2>
-  <p style="margin-bottom:10px; font-size:0.95em;">
-    <strong>Probability-aware gate removal</strong> &mdash; R<sub>z</sub> commutation + R<sub>y</sub> cancellation simplifies the graph to expose the peak.
-  </p>
+  <h2>P10: Eternal Mountain &mdash; 56 Qubits, 3836 Gates</h2>
+  <div class="two-col">
+    <div class="col">
+      <div class="insight-box">
+        <strong>The hardest problem:</strong> Dense connectivity (55%), no graph decomposition,
+        no mirror structure. Every approach that worked on P5&ndash;P9 failed here.
+      </div>
 
-  <div class="two-col" style="align-items:center; gap:24px;">
-    <!-- Animation area -->
-    <div class="col" style="flex:1.5; position:relative;">
-      <div id="p10-anim-container" style="position:relative; width:100%; height:400px; background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); overflow:hidden;">
-        <canvas id="p10-canvas" width="560" height="400" style="display:block; width:100%; height:100%;"></canvas>
-        <div id="p10-stage-label" style="position:absolute; top:12px; left:50%; transform:translateX(-50%); background:rgba(26,35,126,0.9); color:#fff; padding:6px 18px; border-radius:20px; font-size:0.85em; font-weight:600; transition: opacity 0.4s;">
-          Original Circuit &mdash; 56 qubits, 3836 gates
-        </div>
-        <!-- Replay button -->
-        <div id="p10-replay" style="position:absolute; bottom:10px; right:14px; background:#1e88e5; color:#fff; padding:5px 14px; border-radius:6px; font-size:0.78em; cursor:pointer; opacity:0.7; transition:opacity 0.2s;" onclick="restartP10Anim()">
-          Replay
-        </div>
+      <h3>What Failed</h3>
+      <div class="method-card hover-grow" style="font-size:0.85em;">
+        <strong>PyZX clifford_simp</strong>
+        <p>3836 &rarr; 11,512 gates &mdash; made it <em>worse</em></p>
+      </div>
+      <div class="method-card hover-grow" style="font-size:0.85em;">
+        <strong>Qiskit Approximate Transpile</strong>
+        <p>approx=0.99: 3836 &rarr; 3406. Unlike P6, this circuit doesn't collapse</p>
+      </div>
+      <div class="method-card hover-grow" style="font-size:0.85em;">
+        <strong>Near-Identity Removal + Aer MPS</strong>
+        <p>636 gates removed, but 1248 CZ survive. MPS at bond_dim 16&ndash;128: all noise</p>
+      </div>
+
+      <h3 style="margin-top: 10px;">Final: Custom MPO + GPU</h3>
+      <div class="method-card hover-grow" style="font-size:0.85em; border-left: 3px solid #1e88e5;">
+        <strong>MPO with Unswapping on Tesla V100 GPU</strong>
+        <p>
+          Custom Matrix Product Operator absorbing gates from both ends of the circuit simultaneously.
+          CuPy for GPU-accelerated tensor contractions. Bond dimension 256.
+        </p>
+      </div>
+      <div class="method-card hover-grow" style="font-size:0.85em; border-left: 3px solid #1e88e5;">
+        <strong>Pipeline</strong>
+        <p>Transpile &rarr; linear routing (3836 &rarr; 56,897 gates) &rarr; split at midpoint &rarr; absorb left/right &rarr; SVD unswap to control bond growth &rarr; sample + greedy peak extraction</p>
       </div>
     </div>
-
-    <!-- Steps explanation -->
-    <div class="col" style="flex:1;">
-      <div id="p10-step-1" class="p10-step-card" style="opacity:0.35; transition:all 0.5s;">
-        <div class="p10-step-num" style="background:#e53935;">1</div>
-        <div>
-          <strong>Remove all R<sub>z</sub> gates</strong>
-          <p style="font-size:0.82em; margin:2px 0 0;">Phase doesn't affect |amplitude|&sup2; &mdash; exact, zero error</p>
-        </div>
-      </div>
-      <div id="p10-step-2" class="p10-step-card" style="opacity:0.35; transition:all 0.5s;">
-        <div class="p10-step-num" style="background:#fb8c00;">2</div>
-        <div>
-          <strong>Remove small R<sub>y</sub>(&theta;) gates</strong>
-          <p style="font-size:0.82em; margin:2px 0 0;">|&theta;| &lt; 0.5 &rarr; nearly identity, ~30% of U gates removed</p>
-        </div>
-      </div>
-      <div id="p10-step-3" class="p10-step-card" style="opacity:0.35; transition:all 0.5s;">
-        <div class="p10-step-num" style="background:#7b1fa2;">3</div>
-        <div>
-          <strong>CZ&sup2; = I cancellation</strong>
-          <p style="font-size:0.82em; margin:2px 0 0;">Adjacent CZ pairs cancel &mdash; edges vanish from graph</p>
-        </div>
-      </div>
-      <div id="p10-step-4" class="p10-step-card" style="opacity:0.35; transition:all 0.5s;">
-        <div class="p10-step-num" style="background:#2e7d32;">4</div>
-        <div>
-          <strong>Simplified graph &rarr; MPS simulation</strong>
-          <p style="font-size:0.82em; margin:2px 0 0;">Reduced connectivity &rarr; low bond dimension suffices</p>
-        </div>
+    <div class="col">
+      <h3>GPU Run Details</h3>
+      <div style="background:#fff; border-radius:10px; padding:14px; box-shadow:0 1px 6px rgba(0,0,0,0.06); font-size:0.85em;">
+        <table style="width:100%; border-collapse:collapse;">
+          <tr><td style="padding:4px 0; color:#78909c;">Hardware</td><td style="font-weight:600;">Tesla V100-SXM2-32GB</td></tr>
+          <tr><td style="padding:4px 0; color:#78909c;">Backend</td><td style="font-weight:600;">CuPy (CUDA)</td></tr>
+          <tr><td style="padding:4px 0; color:#78909c;">Bond Dimension</td><td style="font-weight:600;">256</td></tr>
+          <tr><td style="padding:4px 0; color:#78909c;">Gates after routing</td><td style="font-weight:600;">56,897</td></tr>
+          <tr><td style="padding:4px 0; color:#78909c;">Unswap rounds</td><td style="font-weight:600;">72 swaps in 10 rounds</td></tr>
+          <tr><td style="padding:4px 0; color:#78909c;">Memory</td><td style="font-weight:600;">80 GB requested</td></tr>
+          <tr><td style="padding:4px 0; color:#78909c;">Walltime</td><td style="font-weight:600;">4 hours</td></tr>
+        </table>
       </div>
 
-      <div id="p10-result-box" class="result-box" style="margin-top:14px; opacity:0; transition: opacity 0.6s;">
-        <strong>Gate reduction:</strong> 3836 &rarr; ~628 gates<br>
-        <strong>Strategy:</strong> Probability-aware &mdash; we only need the peak, not the full state
+      <h3 style="margin-top: 12px;">Mean-Field Backup</h3>
+      <div class="method-card hover-grow" style="font-size:0.85em;">
+        <strong>SVD product-state approximation</strong>
+        <p>Independent fast estimate (~1s). Each CZ replaced by best rank-1 SVD truncation.
+          Per-qubit Z-expectations thresholded to get candidate bitstring.</p>
+      </div>
+
+      <div class="result-box" style="margin-top: 12px;">
+        <strong>Our Prediction:</strong><br>
+        <span class="bitstring" style="font-size: 0.72em;">01111000000011010101100011111100010110000110010000111111</span>
+        <div style="font-size:0.8em; color:#78909c; margin-top:4px;">
+          56 qubits &bull; MPO + mean-field consensus
+        </div>
       </div>
     </div>
   </div>
-
-  <style>
-    .p10-step-card {
-      display: flex; align-items: center; gap: 12px;
-      background: #fff; border-radius: 10px; padding: 10px 14px; margin: 7px 0;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-      border-left: 3px solid #e0e0e0;
-    }
-    .p10-step-card.active {
-      opacity: 1 !important;
-      border-left-color: #1e88e5;
-      box-shadow: 0 3px 14px rgba(0,0,0,0.12);
-    }
-    .p10-step-card.done {
-      opacity: 0.85 !important;
-      border-left-color: #43a047;
-    }
-    .p10-step-num {
-      min-width: 28px; height: 28px; border-radius: 50%;
-      color: #fff; font-weight: 700; font-size: 0.85em;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .p10-step-card p { color: #546e7a; }
-  </style>
-
 </div>
